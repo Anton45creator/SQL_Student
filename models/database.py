@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 DATABASE_NAME = 'application.db'
 engine = create_engine(f'PostgreSQL:///{DATABASE_NAME}')
-session = sessionmaker(band=engine)
+Session = sessionmaker(band=engine)
 
 Base = declarative_base
 
