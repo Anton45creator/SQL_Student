@@ -3,7 +3,7 @@ from flask_restful import Api, Resource, reqparse
 from sqlalchemy import func
 from sqlalchemy.orm.exc import NoResultFound
 
-from models import CourseModel, GroupModel, StudentModel, session
+from main.models import CourseModel, GroupModel, StudentModel, session
 
 app = Flask(__name__)  # Init the flask application
 api = Api(app, prefix='/api/v1.0')
