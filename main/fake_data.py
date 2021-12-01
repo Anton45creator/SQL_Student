@@ -10,7 +10,7 @@ MIN_STUDENTS_IN_GROUP = 10
 MAX_STUDENTS_IN_GROUP = 30
 
 
-def generate_courses() -> list:
+def generate_courses():
     courses = {
         'algebra': 'the study of mathematical symbols and the rules for manipulating these symbols',
         'biology': 'the natural science that studies life and living organisms, including their physical structure, chemical processes, molecular interactions, physiological mechanisms, development and evolution.',
@@ -31,18 +31,18 @@ def generate_courses() -> list:
     ]
 
 
-def generate_students(students_number: int) -> list:
+def generate_students(students_number: int):
     students_names = set()
     first_names = [
         'Liam', 'Olivia', 'Noah', 'Emma', 'Oliver', 'Ava', 'William', 'Sophia',
         'Elijah', 'Isabella', 'James', 'Charlotte', 'Benjamin', 'Amelia',
         'Lucas', 'Mia', 'Mason', 'Harper', 'Ethan', 'Evelyn',
-        ]
+    ]
     second_names = [
         'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller',
         'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez',
         'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin',
-        ]
+    ]
     while len(students_names) < students_number:
         full_name = (choice(first_names), choice(second_names))
         students_names.add(full_name)
@@ -51,11 +51,11 @@ def generate_students(students_number: int) -> list:
             group_id=None,
             first_name=first_name,
             last_name=last_name,
-            ) for first_name, last_name in students_names
-        ]
+        ) for first_name, last_name in students_names
+    ]
 
 
-def generate_groups(groups_number: int) -> list:
+def generate_groups(groups_number: int):
     groups_names = set()
     while len(groups_names) < groups_number:
         two_characters = ''.join(choices(ascii_uppercase, k=2))
@@ -66,7 +66,7 @@ def generate_groups(groups_number: int) -> list:
 
 
 def generate_groups_volumes(groups_number: int, students_number: int,
-                            min_in_group: int, max_in_group: int) -> list:
+                            min_in_group: int, max_in_group: int):
     groups_volumes = []
     for group in range(groups_number):
         volume = 0
@@ -79,13 +79,13 @@ def generate_groups_volumes(groups_number: int, students_number: int,
 
 def add_students_to_groups(
         groups: list, students: list,
-        min_in_group: int, max_in_group: int) -> tuple:
+        min_in_group: int, max_in_group: int):
     groups_volumes = generate_groups_volumes(
         len(groups),
         len(students),
         min_in_group,
         max_in_group,
-        )
+    )
     students_counter = 0
     for group_number, volume in enumerate(groups_volumes):
         for n in range(volume):
@@ -102,7 +102,7 @@ if __name__ == "__main__":
         generate_students(STUDENTS_NUMBER),
         MIN_STUDENTS_IN_GROUP,
         MAX_STUDENTS_IN_GROUP,
-        )
+    )
     courses = generate_courses()
 
     for student in students:

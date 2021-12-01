@@ -55,7 +55,7 @@ def test_add_student_to_course():
         data=dict(course_name='biology'),
     ).get_data(as_text=True)
     assert{'Martic', course_before}
-    assert{ None, course_after}
+    assert{None, course_after}
 
 
 def test_remove_student_from_course():

@@ -90,7 +90,7 @@ class Groups(Resource):
         for group in session.query(GroupModel).\
             outerjoin(StudentModel, GroupModel.name == StudentModel.group_id).\
                 group_by(GroupModel.id, GroupModel.name).\
-                    having(func.count(GroupModel.name) <= volume).all():
+        having(func.count(GroupModel.name) <= volume).all():
             groups[group.name] = dict(
                 id=group.id,
                 name=group.name,
@@ -110,7 +110,7 @@ class StudentsOnCourse(Resource):
         for student in session.query(StudentModel).\
             select_from(CourseModel).\
                 join(StudentModel.courses).\
-                    filter(CourseModel.name == course_name):
+        filter(CourseModel.name == course_name):
             students[student.id] = dict(
                 id=student.id,
                 first_name=student.first_name,
@@ -136,7 +136,7 @@ class StudentsOnCourse(Resource):
             return {
                 'code': 401,
                 'mesage': f'Student with the ID = {student_id} added to the {course_name} course.',
-                }, 401
+            }, 401
         except NoResultFound:
             return {'code': 404, 'message': 'Student not found'}, 404
 
@@ -157,7 +157,7 @@ class StudentsOnCourse(Resource):
             return {
                 'code': 404,
                 'mesage': f'Student with the ID = {student_id} removed from the {course_name} course.',
-                }, 404
+            }, 404
         except NoResultFound:
             return {'code': 404, 'message': 'Student not found'}, 404
 
@@ -167,13 +167,13 @@ api.add_resource(
     '/students/',
     methods=['GET', 'POST'],
     endpoint='students',
-    )
+)
 api.add_resource(
     Students,
     '/students/<student_id>',
     methods=['DELETE'],
     endpoint='student',
-    )
+)
 api.add_resource(Groups, '/groups/', methods=['GET', 'POST'])
 api.add_resource(StudentsOnCourse, '/course/', methods=['GET'])
 api.add_resource(
@@ -181,7 +181,7 @@ api.add_resource(
     '/students/<student_id>/course/',
     methods=['PUT', 'DELETE'],
     endpoint='student_on_course',
-    )
+)
 
 
 if __name__ == '__main__':
