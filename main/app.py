@@ -2,7 +2,6 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse
 from sqlalchemy import func
 from sqlalchemy.orm.exc import NoResultFound
-
 from main.models import CourseModel, GroupModel, StudentModel, session
 
 app = Flask(__name__)  # Init the flask application

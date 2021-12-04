@@ -1,12 +1,14 @@
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
+import os
 
-DATABASE_NAME = 'student'
+DATABASE = os.environ.get('DATABASE', 'student')
 
 Base = declarative_base()
 
-engine = create_engine(f'postgresql://postgres:123456@localhost/{DATABASE_NAME}')
+engine = create_engine(f'postgresql+psycopg2://postgres:123456@localhost/'
+                       f'{DATABASE}')
 
 Session = sessionmaker()
 

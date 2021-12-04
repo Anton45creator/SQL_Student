@@ -75,3 +75,4 @@ def test_remove_student_from_course():
     ).get_data(as_text=True)
     assert {'Martic', course_before}
     assert {None, course_after}
+
