@@ -1,6 +1,5 @@
 from random import choice, choices, randint
 from string import ascii_uppercase, digits
-
 from models import Base, CourseModel, GroupModel, StudentModel, engine, session
 
 GROUPS_NUMBER = 20
