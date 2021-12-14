@@ -1,6 +1,11 @@
 from random import choice, choices, randint
 from string import ascii_uppercase, digits
-from models import Base, CourseModel, GroupModel, StudentModel, engine, session
+from models import Base, CourseModel, GroupModel, StudentModel, engine
+from sqlalchemy.orm import sessionmaker
+
+Session = sessionmaker()
+
+session = Session(bind=engine)
 
 GROUPS_NUMBER = 20
 STUDENTS_NUMBER = 200

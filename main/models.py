@@ -1,18 +1,11 @@
 from sqlalchemy import *
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
-import os
+from app import DATABASE
 
-DATABASE = os.environ.get('DATABASE', 'student')
 
 Base = declarative_base()
 
-engine = create_engine(f'postgresql+psycopg2://postgres:123456@localhost/'
-                       f'{DATABASE}')
-
-Session = sessionmaker()
-
-session = Session(bind=engine)
 
 association_table = Table(
     'association',
@@ -23,6 +16,7 @@ association_table = Table(
 
 
 class GroupModel(Base):
+    bind = 'students'
     __tablename__ = 'group'
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -32,6 +26,7 @@ class GroupModel(Base):
 
 
 class StudentModel(Base):
+
     __tablename__ = 'student'
     id = Column(Integer, primary_key=True)
     group_id = Column(String)
@@ -55,3 +50,7 @@ class CourseModel(Base):
 
     def __repr__(self) -> str:
         return self.name
+
+
+engine = create_engine(f'postgresql+psycopg2://{DATABASE}')
+Base.metadata.create_all(engine)
