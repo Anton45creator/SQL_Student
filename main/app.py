@@ -4,8 +4,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
 
-# DATABASE = os.environ['DATABASE']
-DATABASE = "postgres:123456@localhost/student"
+DATABASE = os.environ['DATABASE']
 
 
 def create_app():
