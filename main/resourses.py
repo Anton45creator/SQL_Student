@@ -55,8 +55,11 @@ class Students(Resource):
 class Groups(Resource):
     # Receives groups and students.
     def get(self):
+        data = request.get_json(force=True)
+        group_name = data.get('group_name')
         groups = {}
-        for group in db.session.query(GroupModel).all():
+        for group in db.session.query(GroupModel).filter(
+                GroupModel.name == group_name):
             students = {}
             for student in db.session.query(
                     StudentModel).filter(StudentModel.group_id == group.name):
@@ -89,9 +92,9 @@ class Groups(Resource):
                 GroupModel.name == group_name).one())
             db.session.commit()
             return {
-                       'code': 200,
-                       'message': f'Group with the ID = {group_name} deleted.',
-                   }, 200
+                'code': 200,
+                'message': f'Group with the ID = {group_name} deleted.',
+            }, 200
         except NoResultFound:
             return {'code': 404, 'message': 'Group not found'}, 404
 
@@ -109,7 +112,7 @@ class StudentsOnCourse(Resource):
         for student in db.session.query(StudentModel).\
             select_from(CourseModel).\
                 join(StudentModel.courses).\
-                    filter(CourseModel.name == course_name):
+            filter(CourseModel.name == course_name):
             students[student.id] = dict(
                 id=student.id,
                 first_name=student.first_name,
@@ -117,6 +120,16 @@ class StudentsOnCourse(Resource):
                 group_id=student.group_id,
             )
         return students
+
+    # Adds a new group.
+    def post(self):
+        data = request.get_json(force=True)
+        course_name = data.get('course_name')
+        description = data.get('description')
+        db.session.add(CourseModel(name=course_name, description=description))
+        db.session.commit()
+        return {'code': 201,
+                'message': f'{course_name} has been added!'}, 201
 
     # Add a student to the course (from a list)
     def put(self):
@@ -131,13 +144,13 @@ class StudentsOnCourse(Resource):
             CourseModel).filter(CourseModel.name == course_name).one()
         try:
             student = db.session.query(
-                 StudentModel).filter(StudentModel.id == student_id).one()
+                StudentModel).filter(StudentModel.id == student_id).one()
             student.courses.append(course)
             db.session.commit()
             return {
-                'code': 401,
+                'code': 201,
                 'mesage': f'Student with the ID = {student_id} added to the {course_name} course.',
-                }, 401
+            }, 201
         except NoResultFound:
             return {'code': 404, 'message': 'Student not found'}, 404
 
@@ -161,6 +174,7 @@ class StudentsOnCourse(Resource):
                 'code': 404,
                 'message': f'Student with the ID = {student_id} '
                            f'removed from the {course_name} course.',
-                }, 404
+            }, 404
         except NoResultFound:
             return {'code': 404, 'message': 'Student not found'}, 404
+
