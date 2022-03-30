@@ -11,4 +11,4 @@ api.add_resource(StudentsOnCourse, '/course/', methods=['GET', 'POST', 'PUT',
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0")
+    app.run()
