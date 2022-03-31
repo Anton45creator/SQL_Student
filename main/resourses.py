@@ -22,7 +22,7 @@ class Students(Resource):
             return student_info
 
     # Add new student
-    def post(self):g
+    def post(self):
         data = request.get_json(force=True)
         first_name = data.get('first_name')
         last_name = data.get('last_name')
@@ -36,7 +36,7 @@ class Students(Resource):
         db.session.commit()
         return {'code': 201, 'message': f'{first_name} {last_name} added'}, 201
 
-    # Delete student by STUDENT_ID
+# Delete student by STUDENT_ID
     def delete(self):
         data = request.get_json(force=True)
         student_id = data.get('student_id')
