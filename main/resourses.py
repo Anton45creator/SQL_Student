@@ -22,7 +22,7 @@ class Students(Resource):
             return student_info
 
     # Add new student
-    def post(self):
+    def post(self):g
         data = request.get_json(force=True)
         first_name = data.get('first_name')
         last_name = data.get('last_name')
